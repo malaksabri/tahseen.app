@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تطبيق تحسين</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            direction: rtl;
+            background-color: purple; /* جعل الخلفية بنفسجية */
+            color: white; /* جعل النص أبيض للوضوح */
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1); /* خلفية شفافة قليلاً */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        h1, label {
+            color: white; /* جعل النص أبيض للوضوح */
+        }
+
+        input[type="text"], input[type="email"], input[type="password"], input[type="tel"], select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background-color: white;
+            color: black;
+            border: 2px solid black;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn:active {
+            background-color: green;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="welcome" class="container">
+        <h1>مرحبا بك في تطبيق تحسين</h1>
+        <button class="btn" onclick="showFrame('login')">ابدأ</button>
+    </div>
+
+    <div id="login" class="container hidden">
+        <h1>تسجيل الدخول</h1>
+        <label>البريد الإلكتروني</label>
+        <input type="email" id="email">
+        <label>الرقم السري</label>
+        <input type="password" id="password">
+        <label>رمز التلميذ</label>
+        <input type="text" id="student_code">
+        <button class="btn" onclick="login()">تسجيل الدخول</button>
+        <button class="btn" onclick="showFrame('newAccount')">إنشاء حساب جديد</button>
+    </div>
+
+    <div id="newAccount" class="container hidden">
+        <h1>إنشاء حساب جديد</h1>
+        <label>الاسم</label>
+        <input type="text" id="name">
+        <label>اللقب</label>
+        <input type="text" id="surname">
+        <label>اسم الولي</label>
+        <input type="text" id="guardian_name">
+        <label>لقب الولي</label>
+        <input type="text" id="guardian_surname">
+        <label>رمز التلميذ</label>
+        <input type="text" id="student_code_new">
+        <label>البريد الإلكتروني</label>
+        <input type="email" id="email_new">
+        <label>الرقم السري</label>
+        <input type="password" id="password_new">
+        <label>رقم الهاتف</label>
+        <input type="tel" id="phone">
+        <button class="btn" onclick="createAccount()">إنشاء حساب</button>
+    </div>
+
+    <div id="mainMenu" class="container hidden">
+        <h1>القائمة الرئيسية</h1>
+        <button class="btn" onclick="showFrame('studentSpace1')">فضاء الطالب</button>
+        <button class="btn" onclick="showFrame('institutionSpace')">فضاء المؤسسة</button>
+        <button class="btn" onclick="showFrame('parentsSpace')">فضاء الأولياء</button>
+    </div>
+
+    <div id="studentSpace1" class="container hidden">
+        <h1>فضاء الطالب</h1>
+        <label>الاسم</label>
+        <input type="text" id="student_name">
+        <label>اللقب</label>
+        <input type="text" id="student_surname">
+        <label>رمز التلميذ</label>
+        <input type="text" id="student_code_1">
+        <label>الجنس</label>
+        <div>
+            <input type="radio" id="male" name="gender" value="ذكر">
+            <label for="male">ذكر</label>
+            <input type="radio" id="female" name="gender" value="أنثى">
+            <label for="female">أنثى</label>
+        </div>
+        <button class="btn" onclick="nextStudentPage()">التالي</button>
+    </div>
+
+    <div id="studentSpace2" class="container hidden">
+        <h1>فضاء الطالب</h1>
+        <label>هل أنتي محجبة؟</label>
+        <div>
+            <input type="radio" id="veil_yes" name="veil" value="نعم">
+            <label for="veil_yes">نعم</label>
+            <input type="radio" id="veil_no" name="veil" value="لا">
+            <label for="veil_no">لا</label>
+        </div>
+        <label>ما نوع حجابك؟</label>
+        <div>
+            <input type="radio" id="regular_veil" name="veil_type" value="عادي">
+            <label for="regular_veil">عادي</label>
+            <input type="radio" id="sharia_veil" name="veil_type" value="شرعي">
+            <label for="sharia_veil">شرعي</label>
+        </div>
+        <label>هل أنتي منقبة؟</label>
+        <div>
+            <input type="radio" id="niqab_yes" name="niqab" value="نعم">
+            <label for="niqab_yes">نعم</label>
+            <input type="radio" id="niqab_no" name="niqab" value="لا">
+            <label for="niqab_no">لا</label>
+        </div>
+        <button class="btn" onclick="showFrame('studentSpace3')">التالي</button>
+    </div>
+
+    <div id="studentSpace3" class="container hidden">
+        <h1>فضاء الطالب</h1>
+        <label>اسم المؤسسة</label>
+        <input type="text" id="institution_name">
+        <label>الطور</label>
+        <select id="educational_level">
+            <option value="ابتدائي">ابتدائي</option>
+            <option value="متوسط">متوسط</option>
+            <option value="ثانوي">ثانوي</option>
+        </select>
+        <label>السنة</label>
+        <select id="grade">
+            <option value="الأولى">الأولى</option>
+            <option value="الثانية">الثانية</option>
+            <option value="الثالثة">الثالثة</option>
+            <option value="الرابعة">الرابعة</option>
+            <option value="الخامسة">الخامسة</option>
+        </select>
+        <label>الطول (سم)</label>
+        <input type="text" id="height">
+        <label>الوزن</label>
+        <input type="text" id="weight">
+        <label>رقم المقاس</label>
+        <input type="text" id="shoe_size">
+        <label>الولاية</label>
+        <select id="state">
+            <option value="أدرار">ولاية أدرار</option>
+            <option value="الشلف">ولاية الشلف</option>
+            <option value="الأغواط">ولاية الأغواط</option>
+            <option value="أم البواقي">ولاية أم البواقي</option>
+            <option value="باتنة">ولاية باتنة</option>
+            <option value="بجاية">ولاية بجاية</option>
+            <option value="بسكرة">ولاية بسكرة</option>
+            <option value="بشار">ولاية بشار</option>
+            <option value="البليدة">ولاية البليدة</option>
+            <option value="البويرة">ولاية البويرة</option>
+            <option value="تمنراست">ولاية تمنراست</option>
+            <option value="تبسة">ولاية تبسة</option>
+            <option value="تلمسان">ولاية تلمسان</option>
+            <option value="تيارت">ولاية تيارت</option>
+            <option value="تيزي وزو">ولاية تيزي وزو</option>
+            <option value="الجزائر">ولاية الجزائر</option>
+            <option value="الجلفة">ولاية الجلفة</option>
+            <option value="جيجل">ولاية جيجل</option>
+            <option value="سطيف">ولاية سطيف</option>
+            <option value="سعيدة">ولاية سعيدة</option>
+            <option value="سكيكدة">ولاية سكيكدة</option>
+            <option value="سيدي بلعباس">ولاية سيدي بلعباس</option>
+            <option value="عنابة">ولاية عنابة</option>
+            <option value="قالمة">ولاية قالمة</option>
+            <option value="قسنطينة">ولاية قسنطينة</option>
+            <option value="المدية">ولاية المدية</option>
+            <option value="مستغانم">ولاية مستغانم</option>
+            <option value="المسيلة">ولاية المسيلة</option>
+            <option value="معسكر">ولاية معسكر</option>
+            <option value="ورقلة">ولاية ورقلة</option>
+            <option value="وهران">ولاية وهران</option>
+            <option value="البيض">ولاية البيض</option>
+            <option value="إليزي">ولاية إليزي</option>
+            <option value="برج بوعريريج">ولاية برج بوعريريج</option>
+            <option value="بومرداس">ولاية بومرداس</option>
+            <option value="الطارف">ولاية الطارف</option>
+            <option value="تندوف">ولاية تندوف</option>
+            <option value="تيسمسيلت">ولاية تيسمسيلت</option>
+            <option value="الوادي">ولاية الوادي</option>
+            <option value="خنشلة">ولاية خنشلة</option>
+            <option value="سوق أهراس">ولاية سوق أهراس</option>
+            <option value="تيبازة">ولاية تيبازة</option>
+            <option value="ميلة">ولاية ميلة</option>
+            <option value="عين الدفلى">ولاية عين الدفلى</option>
+            <option value="النعامة">ولاية النعامة</option>
+            <option value="عين تموشنت">ولاية عين تموشنت</option>
+            <option value="غرداية">ولاية غرداية</option>
+            <option value="غليزان">ولاية غليزان</option>
+        </select>
+        <label>البلدية</label>
+        <input type="text" id="municipality">
+        <label>رقم الهاتف</label>
+        <input type="tel" id="phone_number">
+        <button class="btn" onclick="submitStudent()">إرسال</button>
+    </div>
+
+    <div id="institutionSpace" class="container hidden">
+        <h1>فضاء المؤسسة</h1>
+        <label>اسم المؤسسة</label>
+        <input type="text" id="institution_name2">
+        <label>الطور</label>
+        <select id="educational_level2">
+            <option value="ابتدائي">ابتدائي</option>
+            <option value="متوسط">متوسط</option>
+            <option value="ثانوي">ثانوي</option>
+        </select>
+        <label>الولاية</label>
+        <select id="state2">
+            <option value="أدرار">ولاية أدرار</option>
+            <option value="الشلف">ولاية الشلف</option>
+            <option value="الأغواط">ولاية الأغواط</option>
+            <option value="أم البواقي">ولاية أم البواقي</option>
+            <option value="باتنة">ولاية باتنة</option>
+            <option value="بجاية">ولاية بجاية</option>
+            <option value="بسكرة">ولاية بسكرة</option>
+            <option value="بشار">ولاية بشار</option>
+            <option value="البليدة">ولاية البليدة</option>
+            <option value="البويرة">ولاية البويرة</option>
+            <option value="تمنراست">ولاية تمنراست</option>
+            <option value="تبسة">ولاية تبسة</option>
+            <option value="تلمسان">ولاية تلمسان</option>
+            <option value="تيارت">ولاية تيارت</option>
+            <option value="تيزي وزو">ولاية تيزي وزو</option>
+            <option value="الجزائر">ولاية الجزائر</option>
+            <option value="الجلفة">ولاية الجلفة</option>
+            <option value="جيجل">ولاية جيجل</option>
+            <option value="سطيف">ولاية سطيف</option>
+            <option value="سعيدة">ولاية سعيدة</option>
+            <option value="سكيكدة">ولاية سكيكدة</option>
+            <option value="سيدي بلعباس">ولاية سيدي بلعباس</option>
+            <option value="عنابة">ولاية عنابة</option>
+            <option value="قالمة">ولاية قالمة</option>
+            <option value="قسنطينة">ولاية قسنطينة</option>
+            <option value="المدية">ولاية المدية</option>
+            <option value="مستغانم">ولاية مستغانم</option>
+            <option value="المسيلة">ولاية المسيلة</option>
+            <option value="معسكر">ولاية معسكر</option>
+            <option value="ورقلة">ولاية ورقلة</option>
+            <option value="وهران">ولاية وهران</option>
+            <option value="البيض">ولاية البيض</option>
+            <option value="إليزي">ولاية إليزي</option>
+            <option value="برج بوعريريج">ولاية برج بوعريريج</option>
+            <option value="بومرداس">ولاية بومرداس</option>
+            <option value="الطارف">ولاية الطارف</option>
+            <option value="تندوف">ولاية تندوف</option>
+            <option value="تيسمسيلت">ولاية تيسمسيلت</option>
+            <option value="الوادي">ولاية الوادي</option>
+            <option value="خنشلة">ولاية خنشلة</option>
+            <option value="سوق أهراس">ولاية سوق أهراس</option>
+            <option value="تيبازة">ولاية تيبازة</option>
+            <option value="ميلة">ولاية ميلة</option>
+            <option value="عين الدفلى">ولاية عين الدفلى</option>
+            <option value="النعامة">ولاية النعامة</option>
+            <option value="عين تموشنت">ولاية عين تموشنت</option>
+            <option value="غرداية">ولاية غرداية</option>
+            <option value="غليزان">ولاية غليزان</option>
+        </select>
+        <label>البلدية</label>
+        <input type="text" id="municipality2">
+        <label>عدد الطلاب الحالي</label>
+        <input type="text" id="current_students">
+        <label>الزيادة المتوقعة في عدد الطلاب</label>
+        <input type="text" id="expected_increase">
+        <button class="btn" onclick="submitInstitution()">إرسال</button>
+    </div>
+
+    <div id="parentsSpace" class="container hidden">
+        <h1>فضاء الأولياء</h1>
+        <p>تتبع موقع طفلك الآن</p>
+        <button class="btn" onclick="loginToSchool()">تسجيل الدخول للمدرسة</button>
+        <button class="btn" onclick="logoutFromInstitution()">تسجيل الخروج من المؤسسة</button>
+    </div>
+
+    <script>
+        function showFrame(frameId) {
+            const frames = document.querySelectorAll('.container');
+            frames.forEach(frame => frame.classList.add('hidden'));
+            document.getElementById(frameId).classList.remove('hidden');
+        }
+
+        function nextStudentPage() {
+            const gender = document.querySelector('input[name="gender"]:checked').value;
+            if (gender === "أنثى") {
+                showFrame('studentSpace2');
+            } else {
+                showFrame('studentSpace3');
+            }
+        }
+
+        function login() {
+            // هنا تضاف وظائف تسجيل الدخول
+            showFrame('mainMenu');
+        }
+
+        function createAccount() {
+            // هنا تضاف وظائف إنشاء الحساب
+            showFrame('login');
+        }
+
+        function submitStudent() {
+            // هنا تضاف وظائف إرسال معلومات الطالب
+        }
+
+        function submitInstitution() {
+            // هنا تضاف وظائف إرسال معلومات المؤسسة
+        }
+
+        function loginToSchool() {
+            // هنا تضاف وظائف تسجيل الدخول للمدرسة
+        }
+
+        function logoutFromInstitution() {
+            // هنا تضاف وظائف تسجيل الخروج من المؤسسة
+        }
+    </script>
+</body>
+</html>
